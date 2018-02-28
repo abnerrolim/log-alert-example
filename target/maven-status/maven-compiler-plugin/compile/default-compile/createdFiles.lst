@@ -1,0 +1,5 @@
+br/org/test/AppConfig.class
+br/org/test/Application.class
+br/org/test/controller/Controller.class
+br/org/test/controller/utils/LogUtils.class
+br/org/test/controller/filter/MDCFilter.class

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="DEBUG" monitorInterval="30">
+    <Appenders>
+        <SMTP name="Mailer" ignoreExceptions="false"
+              subject="Error Log" to="${env:receipients}" from="${env:from}"
+              smtpHost="${env:smtpHost}" smtpPort="${env:smtpPort}"
+              smtpUsername="${env:smtpUser}"
+              smtpProtocol="${env:smtpProtocol}"
+              smtpPassword="${env:smtpPassword}" smtpDebug="false" bufferSize="512">
+            <MarkerFilter marker="ALERT_SUPPORT" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout>
+                <pattern>%d{dd-MM-yyyy HH:mm:ss,SSS} %-5level %logger{36} context:%mdc %msg %n</pattern>
+            </PatternLayout>
+        </SMTP>
+        <Async name="Async">
+            <AppenderRef ref="Mailer"/>
+        </Async>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] [%marker] %-5level %logger{36} context:%mdc CONSOLE %msg %n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="br.org.test" level="INFO">
+            <AppenderRef ref="Mailer"/>
+        </Logger>
+        <Root level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>
